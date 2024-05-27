@@ -1,0 +1,74 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="menu.setMainPage('login.html', {closeMenu: true})">
+                <span ng-if="!session.logged">
+                    {{'Login' | translate}}
+                    <ons-icon icon="ion-log-in" size="28px" fixed-width="false"></ons-icon>
+                </span>
+                <span ng-if="session.logged">
+                    <strong>User:</strong> {{ session.username }}
+                </span>
+            </ons-toolbar-button>                
+        </div>
+    </ons-toolbar>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>	
+	
+<form name="enrForm" novalidate>
+        <ons-row class="input">
+            <ons-col>
+			<!-- ktraore() yyyy-MM-ddThh:mm  yyyy-MM-ddTHH:mm:ss -->
+				<div class="container">
+					<br/>
+					<div class="row">						
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'Location' | translate}}:</label>									
+								</div>
+								<div class="col-xs-5">
+									<select name="position" ng-model="maintenance.position" ng-options="item.PDesignation for item in maintenance.positions | orderBy: 'PDesignation'"></select>
+									<div class="error" ng-show="maintenance.position === null && maintenance.invalid">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>
+	
+								</div>
+							</div>					
+					</div>
+			
+					<div class="row" >
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'Zone' | translate}}:</label>
+								</div>
+								<div class="col-xs-3" >
+									<select name="location"  ng-disabled="maintenance.position === null" ng-model="maintenance.location" ng-options="item.LDesignation for item in maintenance.locations | filter:{PositionId: maintenance.position.Id}| orderBy: 'LDesignation'"></select>
+									<div class="error" ng-show="maintenance.location === null && maintenance.invalid">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>										
+								</div>
+							</div>
+
+                    </div><!-- end 'row' -->
+
+            </ons-col>
+        </ons-row>	
+		<ons-row class="buttons">
+            <ons-col>
+				<div>
+					<ons-button ng-click="maintenance.submit()" ng-disabled="maintenance.submitting">{{'Send and Continue' | translate}}</ons-button> 
+				</div>
+            </ons-col>
+        </ons-row>
+				
+</form>
+</ons-page>

@@ -1,0 +1,52 @@
+{
+    "configurations": [
+        {
+            "name": "Launch via NPM",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "debug"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        
+        {
+            "type": "firefox",
+            "request": "attach",
+            "name": "Attach"
+        },
+
+        {
+            "name": "Attach",
+            "port": 9229,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "type": "firefox",
+            "request": "attach",
+            "name": "Attach"
+        },
+
+        {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Launch index.html",
+            "file": "${workspaceFolder}/index.html"
+        },
+        {
+            "type": "msedge",
+            "name": "192.168.2.226/khanane/",
+            "request": "launch",
+            "url": "192.168.2.226/khanane/"
+        }
+    ]
+}

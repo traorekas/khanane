@@ -1,0 +1,96 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="menu.setMainPage('login.html', {closeMenu: true})">
+                <span ng-if="!session.logged">
+                    {{'Login' | translate}}
+                    <ons-icon icon="ion-log-in" size="28px" fixed-width="false"></ons-icon>
+                </span>
+                <span ng-if="session.logged">
+                    <strong>User:</strong> {{ session.username }}
+                </span>
+            </ons-toolbar-button>                
+        </div>
+    </ons-toolbar>
+   
+    <ons-row class="input">
+        <ons-col>
+            <div class="container">
+                <br/>
+                <div class="row">
+                    <div class="col-md-6 row">
+                        <div class="col-sm-5">
+                            <label>{{'Start date' | translate}}:</label>							
+                        </div>
+                        <div class="col-sm-6">
+				<input type="date" id="dDate" name="dDate" ng-model="maintenancesRecords.dDate"  value="dDate" placeholder="yyyy-MM-dd" min="1800-01-01" max="3000-12-31" required />																													
+                        </div>							
+                    </div>
+                    <div class="col-md-6 row">
+                        <div class="col-sm-5">
+                            <label>{{'End date' | translate}}:</label>							
+                        </div>
+                        <div class="col-sm-6">
+				<input type="date" id="eDate" name="eDate" ng-model="maintenancesRecords.eDate" value="eDate" placeholder="yyyy-MM-dd" min="1800-01-01" max="3000-12-31" required />															
+                        </div>						
+                    </div>
+                </div>
+            </div>
+        </ons-col>
+    </ons-row>
+    
+    <ons-row>
+        <ons-col>
+            <ons-button ng-disabled="historiesMaintenances.click" ng-click="historiesMaintenances(maintenancesRecords.dDate,maintenancesRecords.eDate)">{{'Search' | translate}}</ons-button>
+        </ons-col>
+    </ons-row>	
+ <ons-row <!-- ng-show="historiesMaintenances.searched -->" 
+        <ons-col>
+            <br/>
+            <ons-list>
+                <ons-list-header>
+                    <div class="row">
+                        <div class="col">{{'Date' | translate}}</div>
+                        <div class="col">{{'Airline' | translate}}</div>
+                        <div class="col">{{'Flight' | translate}}</div>
+                        <div class="col">{{'Place' | translate}}</div>
+                        <div class="col">{{'Officer' | translate}}</div>
+                        <div class="col">{{'Time' | translate}}</div>
+                        <div class="col"></div>
+                    </div>
+                </ons-list-header> 
+                <ons-list-item ng-if="maintenancesRecords.MRsValues === null || maintenancesRecords.MRsValues.length === 0">{{'No data available' | translate}}</ons-list-item>
+                <ons-list-item ng-repeat="entry in maintenancesRecords.MRsValues">
+                    <div class="row">
+                        <div class="col">{{shared.toNiceDate(entry.CreateDate)}}</div>
+                        <div class="col">{{entry.ZoneId}}</div>
+                        <div class="col">{{entry.FpId}}</div>
+                        <div class="col">{{entry.PpId}}</div>
+                        <div class="col">{{entry.CamId}}</div>
+                        <div class="col">{{entry.UpsId}}</div>
+                        <div class="col"><a href ng-click="historiesMaintenances.deleteEntry(entry)">{{'Delete' | translate}}</a></div> 
+                    </div>
+					
+					<div>
+						{{maintenancesRecords.arrMStation}}
+					</div>
+
+		<ons-row class="buttons">
+            <ons-col>
+				<div>
+					<ons-button ng-click="maintenance.submit()" ng-disabled="maintenance.submitting">{{'Send and Continue' | translate}}</ons-button> 
+				</div>
+            </ons-col>
+        </ons-row>
+
+                </ons-list-item>
+            </ons-list>
+        </ons-col>
+    </ons-row>	

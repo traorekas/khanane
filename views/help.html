@@ -1,0 +1,23 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="menu.setMainPage('login.html', {closeMenu: true})">
+                <ons-icon icon="{{session.logged? 'ion-log-out' : 'ion-log-in'}}" size="28px" fixed-width="false"></ons-icon>
+                {{'Login' | translate}}
+            </ons-toolbar-button>                
+        </div>
+    </ons-toolbar>
+
+    <ons-row>
+        <ons-col>
+            <h2>{{'Help' | translate}}</h2>
+        </ons-col>
+    </ons-row>
+</ons-page>

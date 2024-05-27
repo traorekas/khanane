@@ -1,0 +1,58 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+    </ons-toolbar>
+
+    <div ng-show="!session.logged">
+        <ons-row>
+            <ons-col>
+                <h2>{{'Login' | translate}}</h2>
+            </ons-col>
+        </ons-row>
+        <ons-row class="input">
+            <ons-col>
+                <label>{{'Username' | translate}}</label>
+            </ons-col>
+            <ons-col>
+                <input type="text" ng-model="session.username"/>
+            </ons-col>
+        </ons-row>
+        <ons-row class="input">
+            <ons-col>
+                <label>{{'Password' | translate}}</label>
+            </ons-col>
+            <ons-col>
+                <input type="password" ng-model="session.password"/>
+            </ons-col>
+        </ons-row>
+        <ons-row class="input">
+            <ons-col>
+                <ons-button modifier="normal" ng-click="session.submit()">{{'Submit' | translate}}</ons-button>
+            </ons-col>
+        </ons-row>
+    </div>
+
+    <div ng-show="session.logged">
+        <ons-row>
+            <ons-col>
+                <br/>
+                <div>
+                    {{'msgYouAreCurrentlyLoggedAs' | translate}}
+                    <strong>{{session.userData.username}}</strong>
+                </div>
+                <br/>
+            </ons-col>
+        </ons-row>
+        <ons-row class="input">
+            <ons-col>
+                <ons-button modifier="normal" ng-click="session.logout()">{{'Logout' | translate}}</ons-button>
+            </ons-col>
+        </ons-row>
+    </div>
+</ons-page>

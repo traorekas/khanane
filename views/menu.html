@@ -1,0 +1,38 @@
+<ons-page modifier="menu-page">
+    <ons-toolbar modifier="transparent"></ons-toolbar>
+
+    <ons-list class="menu-list">
+        <ons-list-item class="menu-item" ng-click="nav.setPage('servicing.html', {closeMenu: true})">
+            <ons-icon icon="ion-compose"></ons-icon>
+            {{'Servicing' | translate}}
+        </ons-list-item>
+		<ons-list-item class="menu-item" ng-click="nav.setPage('DeviceMovement.html', {closeMenu: true})">
+            <ons-icon icon="ion-compose"></ons-icon>
+            {{'DeviceMovement' | translate}}
+        </ons-list-item>
+        <ons-list-item class="menu-item" ng-click="nav.setPage('device.html', {closeMenu: true})">
+            <ons-icon icon="fa-list"></ons-icon>
+            {{'Device' | translate}}
+            <!--<div class="notification menu-notification">3</div>-->
+        </ons-list-item>
+		
+		<ons-list-item class="menu-item" ng-click="nav.setPage('maintenancesRecords.html', {closeMenu: true})">
+            <ons-icon icon="ion-compose"></ons-icon>
+            {{'Maintenance' | translate}}
+        </ons-list-item>		
+    </ons-list>
+
+    <br>
+
+    <ons-list class="bottom-menu-list">
+        <ons-list-item class="bottom-menu-item" ng-click="nav.setPage('settings.html', {closeMenu: true})">
+            <ons-icon icon="ion-settings"></ons-icon>
+            {{'Settings' | translate}}
+        </ons-list-item>
+        <ons-list-item class="bottom-menu-item" ng-click="nav.setPage('help.html', {closeMenu: true})">
+            <ons-icon icon="ion-help"></ons-icon>
+            {{'Help' | translate}}
+        </ons-list-item>
+        
+    </ons-list>
+</ons-page>

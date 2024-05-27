@@ -1,0 +1,136 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="menu.setMainPage('login.html', {closeMenu: true})">
+                <span ng-if="!session.logged">
+                    {{'Login' | translate}}
+                    <ons-icon icon="ion-log-in" size="28px" fixed-width="false"></ons-icon>
+                </span>
+                <span ng-if="session.logged">
+                    <strong>User:</strong> {{ session.username }}
+                </span>
+            </ons-toolbar-button>                
+        </div>
+    </ons-toolbar>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>	
+	
+<form name="enrForm" novalidate>
+        <ons-row class="input">
+            <ons-col>
+				<div class="container">
+					<br/>
+					
+					<table>
+					
+					<tr>
+						<td> Devices </td>
+						<td>
+							<select id="DevicesSrc" name="DevicesSrc"  ng-model="DevicesMouvement.device" ng-change="DeviceDetails(DevicesMouvement.devicesSrc, DevicesMouvement.device, DevicesMouvement.devices_categoriesSrc, DevicesMouvement.positions, DevicesMouvement.locations, DevicesMouvement.zones, DevicesMouvement.stations)" ng-options="item.Device for item in DevicesMouvement.devicesSrc | orderBy: 'Device'"></select>		
+						</td>
+						<!--<td>
+							<input id="DeviceSelected_Cat" name="DeviceSelected" /></label>						
+						</td>-->					
+						
+					</tr>
+				
+					<tr>
+						<th>  </th>
+                        <th>{{'Location' | translate}}</th>
+                        <th>{{'Zone' | translate}}<th>
+						<th>{{'Position' | translate}}<th>
+                    </tr>
+					<tr>
+						<td> Source </td>
+						<td> 
+							<div>
+								<select id="position"  name="position" ng-model="DevicesMouvement.position" ng-options="item.PDesignation for item in DevicesMouvement.positions | orderBy: 'PDesignation'"></select>
+								<div class="error" ng-show="DevicesMouvement.position === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>
+							</div>
+						</td>
+						<td> 
+							<div>
+								<select id="location"  name="location"  ng-disabled="DevicesMouvement.position === null" ng-model="DevicesMouvement.location" ng-options="item.LDesignation for item in DevicesMouvement.locations | filter:{PositionId: DevicesMouvement.position.Id}| orderBy: 'LDesignation'"></select>
+								<div class="error" ng-show="DevicesMouvement.location === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>										
+							</div>
+						</td>
+						<td> 
+							<div>
+								<select id ="zone"  name="zone"  ng-disabled="DevicesMouvement.location === null"  ng-model="DevicesMouvement.zone" ng-options="item.ZDesignation for item in DevicesMouvement.zones | filter:{LocationId: DevicesMouvement.location.Id}| orderBy: 'ZDesignation'"></select>
+								<div class="error" ng-show="DevicesMouvement.zone === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>
+							</div>	
+														
+						</td>
+					</tr>
+					<tr>					
+                        <td> Destination </td>
+						<td> 
+							<div>
+								<select id="positionSrc"  name="positionSrc" ng-model="DevicesMouvement.positionSrc" ng-options="item.PDesignation for item in DevicesMouvement.positionsSrc | orderBy: 'PDesignation'"></select>
+								<div class="error" ng-show="DevicesMouvement.positionSrc === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>	
+							</div>						
+						</td>
+						<td> 
+							<div>
+								<select id ="locationSrc"  name="locationSrc"  ng-disabled="DevicesMouvement.positionSrc === null" ng-model="DevicesMouvement.locationSrc"  ng-change="UpDataList()" ng-options="item.LDesignation for item in DevicesMouvement.locationsSrc | filter:{PositionId: DevicesMouvement.positionSrc.Id}| orderBy: 'LDesignation'"></select>
+								<div class="error" ng-show="DevicesMouvement.locationSrc === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>										
+							</div>						
+						</td>
+						<td> 
+							<div>
+								<select id ="zoneSrc"  name="zoneSrc"  ng-disabled="DevicesMouvement.locationSrc === null" ng-model="DevicesMouvement.zoneSrc" ng-options="item.ZDesignation for item in DevicesMouvement.zonesSrc | filter:{LocationId: DevicesMouvement.locationSrc.Id} : true | orderBy: 'ZDesignation'"></select>
+								<div class="error" ng-show="DevicesMouvement.zoneSrc === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>
+							</div>						
+						</td>
+						<td>
+						     <!--<div>
+								<select id ="IdDesktop"  name="stationSrc"  ng-disabled="DevicesMouvement.zoneSrc === null" ng-model="DevicesMouvement.stationSrc" ng-options="item.DesktopId for item in DevicesMouvement.stationSrc | filter:{ZoneId: DevicesMouvement.zoneSrc.Id}| orderBy: 'DesktopId'"></select>
+								<div class="error" ng-show="DevicesMouvement.stationSrc === null && DevicesMouvement.invalid">
+									<span>{{'errorRequiredField' | translate}}</span>
+								</div>
+							</div>	
+                                                      -->
+						
+							<select id="DevicesSrc" name="DevicesSrc"  ng-model="DevicesMouvement.device" ng-change="DeviceDetails(DevicesMouvement.devicesSrc, DevicesMouvement.device, DevicesMouvement.devices_categoriesSrc, DevicesMouvement.positions, DevicesMouvement.locations, DevicesMouvement.zones, DevicesMouvement.stations)" ng-options="item.Device for item in DevicesMouvement.devicesSrc | orderBy: 'Device'"></select>		
+						</td>
+
+						</td>
+                    </tr>
+					</table>
+												
+				<!-- end 'row' -->
+            </ons-col>
+        </ons-row>	
+		<br/>
+		<br/>
+		<ons-row class="buttons">
+            <ons-col>
+				<div>
+					<ons-button ng-click="DevicesMouvement.submit()" ng-disabled="DevicesMouvement.submitting">{{'Send and Continue' | translate}}</ons-button> 
+				</div>						
+            </ons-col>
+        </ons-row>
+				
+</form>
+</ons-page>

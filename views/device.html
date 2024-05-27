@@ -1,0 +1,98 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="menu.setMainPage('login.html', {closeMenu: true})">
+                <span ng-if="!session.logged">
+                    {{'Login' | translate}}
+                    <ons-icon icon="ion-log-in" size="28px" fixed-width="false"></ons-icon>
+                </span>
+                <span ng-if="session.logged">
+                    <strong>User:</strong> {{ session.username }}
+                </span>
+            </ons-toolbar-button>                
+        </div>
+    </ons-toolbar>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>	
+	
+<form name="enrForm" id="enrForm" novalidate>
+        <ons-row class="input">
+            <ons-col>
+				<div class="container">
+					<br/>
+					<div class="row">
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'DateTime' | translate}}:</label>
+								</div>
+								<div class="col-xs-3"  ng-model="DateController">								  
+									<input type="datetime-local" id="DateAdd" name="DateAdd" ng-model="device.DateAdd" value="DateAdd" placeholder="yyyy-MM-ddThh:mm:ss" min="1800-01-01T00:00:00" max="3000-12-31T00:23:59" required />															
+									<div class="error" ng-show="device.DateAdd === null">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>
+								</div>
+							</div>	
+
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'Device_Categorie' | translate}}:</label>									
+								</div>								
+								<div class="col-xs-5">
+									<select name="DCategorie" ng-model="device.device_categorie" ng-options="item.CDesignation for item in device.devices_categories | orderBy: 'CDesignation'"></select>
+									<div class="error" ng-show="device.devices_categories === null && device.invalid">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>
+								</div> 
+							</div>	
+							
+					</div>								
+                    <div class="row"> 					
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'IsUsed' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="device.IsUsed"></ons-switch>
+                            </div>
+                        </div>	
+
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Device' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">
+								<input name="Device" ng-model= "device.Device">							
+                            </div>
+                        </div>	
+						
+						<div class="row observations">
+							<div class="col-sm-3 col-xs-3">
+								<label>{{'Observations' | translate}}:</label>
+							</div>
+							<div class="col-sm-8 col-xs-5">
+								<textarea name="Observations" ng-model="device.Observations" ng-init="text = 'Hello, this is my default text.'" ></textarea>								
+							</div>
+						</div>								
+					</div>		
+                </div>					
+            </ons-col>
+        </ons-row>	
+		<ons-row class="buttons">
+            <ons-col>
+				<div>
+					<ons-button ng-click="device.submit()" ng-disabled="device.submitting">{{'Send and Continue' | translate}}</ons-button> 
+				</div>
+            </ons-col>
+        </ons-row>
+				
+</form>
+</ons-page>

@@ -1,0 +1,326 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                {{'Menu' | translate}}
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Securiport</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="menu.setMainPage('login.html', {closeMenu: true})">
+                <span ng-if="!session.logged">
+                    {{'Login' | translate}}
+                    <ons-icon icon="ion-log-in" size="28px" fixed-width="false"></ons-icon>
+                </span>
+                <span ng-if="session.logged">
+                    <strong>User:</strong> {{ session.username }}
+                </span>
+            </ons-toolbar-button>                
+        </div>
+    </ons-toolbar>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>	
+	
+<form name="enrForm" id="enrForm" novalidate>
+        <ons-row class="input">
+            <ons-col>
+			<!-- ktraore() yyyy-MM-ddThh:mm  yyyy-MM-ddTHH:mm:ss -->
+				<div class="container">
+					<br/>
+					<div class="row">
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'DateTime' | translate}}:</label>
+								</div>
+								<div class="col-xs-3"  ng-model="DateController">								  
+									<input type="datetime-local" id="DateUpKeep" name="DateUpKeep" ng-model="maintenance.DateUpKeep" ng-change="verifyDate(DateUpKeep)" value="DateUpKeep" placeholder="yyyy-MM-ddThh:mm:ss" min="1800-01-01T00:00:00" max="3000-12-31T00:23:59" required />															
+									<div class="error" ng-show="maintenance.DateUpKeep === null">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>
+								</div>
+							</div>
+						
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'Location' | translate}}:</label>									
+								</div>
+								<div class="col-xs-5">
+									<select name="position" ng-model="maintenance.position" ng-options="item.PDesignation for item in maintenance.positions | orderBy: 'PDesignation'"></select>
+									<div class="error" ng-show="maintenance.position === null && maintenance.invalid">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>
+								</div>
+							</div>					
+					</div>
+			
+					<div class="row" >
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'Zone' | translate}}:</label>
+								</div>
+								<div class="col-xs-3" >
+									<select name="location"  ng-disabled="maintenance.position === null" ng-model="maintenance.location" ng-options="item.LDesignation for item in maintenance.locations | filter:{PositionId: maintenance.position.Id} : true | orderBy: 'LDesignation'"></select>
+									<div class="error" ng-show="maintenance.location === null && maintenance.invalid">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>										
+								</div>
+							</div>
+
+							<div class="col-sm-6 row">
+								<div class="col-xs-3">
+									<label>{{'Position' | translate}}:</label>
+								</div>
+								<div class="col-xs-3">	
+									<select name="zone"  ng-disabled="maintenance.location === null" ng-model="maintenance.zone" ng-options="item.ZDesignation for item in maintenance.zones | filter:{LocationId: maintenance.location.Id} : true | orderBy: 'ZDesignation'"></select>							
+									<div class="error" ng-show="maintenance.zone === null && maintenance.invalid">
+										<span>{{'errorRequiredField' | translate}}</span>
+									</div>
+								</div>
+							</div>
+
+                    </div><!-- end 'row' -->
+
+					<div class='row'>	
+
+					    <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Desktop' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-3">
+<!-- 
+								CreateDate | date :'dd/MM/yyyy' :! maintenance.DateUpKeep | date :'dd/MM/yyyy', 
+								ng-change="IDeviceRecorde(maintenance.stations,maintenance.DateUpKeep)"
+-->
+                                 <select id="IdDesktop" name="station" ng-disabled="maintenance.zone === null" ng-model="maintenance.station" ng-options="item.DesktopId for item in maintenance.stations | filter:{ZoneId: maintenance.zone.Id}: true | orderBy: 'DesktopId'"></select>	
+                                <div class="error" ng-show="maintenance.station === null && maintenance.invalid">
+                                    <span>{{'errorRequiredField' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>	
+						
+					    <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Screen' | translate}}:</label>
+                            </div>
+														
+                            <div class="col-xs-3">
+<!-- 							
+								(CreateDate.date | date :'dd/MM/yyyy') !: (maintenance.DateUpKeep.date | date :'dd/MM/yyyy'),
+								<input name="Screen" required ng-model= "maintenance.station.ScreenId_Type" value="maintenance.station.ScreenId_Type" >
+                                <div class="error" ng-show="maintenance.station === null && maintenance.invalid">
+                                    <span>{{'errorRequiredField' | translate}}</span>									
+                                </div>
+								(CreateDate.date | date :'dd/MM/yyyy') :! (maintenance.DateUpKeep.date | date :'dd/MM/yyyy'),
+								ng-change="IDeviceRecorde(maintenance.stations,maintenance.DateUpKeep)"
+ -->
+                                 <select id="IdScreen" name="station" ng-disabled="maintenance.zone === null" ng-model="maintenance.station" ng-options="item.ScreenId_Type for item in maintenance.stations | filter:{ ZoneId: maintenance.zone.Id, DesktopId:maintenance.station.DesktopId} : true | orderBy: 'DesktopId'"></select>	
+                                <div class="error" ng-show="maintenance.station === null && maintenance.invalid">
+                                    <span>{{'errorRequiredField' | translate}}</span>
+                                </div>
+                            </div>															
+                        </div>										
+					</div>
+					
+					<div class="row">		
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Suw' | translate}}:</label>
+								<button class="btn btn-default" id="_Suw" ng-click="OpenPopupWindow()">{{'Time' | translate}}</button>
+                            </div>
+                            <div class="col-xs-3">
+                                <input name="Suw" id="Suw" required ng-model="maintenance.Suw" readonly>
+                            </div>
+                        </div>							
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Sus' | translate}}:</label>
+								<button class="btn btn-default" id="_Sus" ng-click="OpenPopupWindow()">{{'Time' | translate}}</button>
+                            </div>
+                            <div class="col-xs-3">
+                                <input name="Sus" id="Sus" required ng-model="maintenance.Sus" readonly>
+                            </div>
+                        </div>											
+					</div>					
+					<div class="row" >
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Cam' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">
+								<input name="Cam" required ng-model= "maintenance.station.CamId" ng-change= "GetDestop()">
+                                <ons-switch ng-model="maintenance.Cam"></ons-switch>								
+                            </div>
+                        </div>	
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Fp' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">	
+								<input name="Fp" required ng-model="maintenance.station.FpId" ng-change= "GetDestop()">							
+                                <ons-switch ng-model="maintenance.Fp"></ons-switch>
+                            </div>
+                        </div>											
+					</div>					
+					<div class="row">
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Pp' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">
+								<input name="Pp" required ng-model="maintenance.station.PpId" ng-change= "GetDestop()">
+                                <ons-switch ng-model="maintenance.Pp"></ons-switch>
+                            </div>
+                        </div>	
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Kbd' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">	
+								<input name="Kbd" required ng-model="maintenance.station.KbdId" ng-change= "GetDestop()">							
+                                <ons-switch ng-model="maintenance.Kbd"></ons-switch>
+                            </div>
+                        </div>																
+					</div>
+					<div class="row">
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Mos' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">
+								<input name="Mos" required ng-model="maintenance.station.MosId" ng-change= "GetDestop()">
+                                <ons-switch ng-model="maintenance.Mos"></ons-switch>
+                            </div>
+                        </div>	
+
+						<div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Ups' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-6">	
+								<input name="Ups" required ng-model="maintenance.station.UpsId" ng-change= "GetDestop()">							
+                                <ons-switch ng-model="maintenance.Ups"></ons-switch>
+                            </div>
+                        </div>		
+					</div>					
+                    <div class="row">
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Rcg' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Rcg"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Av' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Av"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Cln' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Cln"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Ss' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Ss"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Snd' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Snd"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Net' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Net"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Swi' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Swi"></ons-switch>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-3">
+                                <label>{{'Usb' | translate}}:</label>
+                            </div>
+                            <div class="col-xs-2">
+                                <ons-switch ng-model="maintenance.Usb"></ons-switch>
+                            </div>
+                        </div>						
+                    </div>					
+					<div class="row">			
+					    <div class="col-sm-6 row">
+                            <div class="col-xs-4">
+                                <label>{{'Time 1' | translate}}:</label>
+								<button class="btn btn-default" id="_Time1" ng-click="OpenPopupWindow()"> {{'Time' | translate}}</button>
+                            </div>
+                            <div class="col-xs-2">
+								<input name="Time1" id= "Time1" required ng-model="maintenance.Time1" readonly>                                
+                            </div>
+                        </div>						
+                        <div class="col-sm-6 row">
+                            <div class="col-xs-4">
+                                <label>{{'Time 2' | translate}}:</label>
+								<button class="btn btn-default" id="_Time2" ng-click="OpenPopupWindow()"> {{'Time' | translate}}</button>
+                            </div>
+                            <div class="col-xs-2">
+                                <input name="Time2" id="Time2" required ng-model="maintenance.Time2" readonly>
+                            </div>
+                        </div>						
+						<div class="col-sm-6 row">
+                            <div class="col-xs-4">
+                                <label>{{'Time 3' | translate}}:</label>
+								<button class="btn btn-default" id="_Time3" ng-click="OpenPopupWindow()"> {{'Time' | translate}}</button> 
+                            </div>
+                            <div class="col-xs-2">
+                                <input name="Time3" id="Time3" required ng-model="maintenance.Time3" value="maintenance.Time3" readonly>
+                            </div>
+                        </div>
+												
+					</div>				
+                    <div class="row observations">
+                        <div class="col-sm-3 col-xs-3">
+                            <label>{{'Observations' | translate}}:</label>
+                        </div>
+                        <div class="col-sm-8 col-xs-5">
+                            <textarea name="observations" required ng-model="maintenance.observations"></textarea>
+                        </div>
+                    </div>								
+					
+                </div>	
+				
+            </ons-col>
+        </ons-row>	
+		<ons-row class="buttons">
+            <ons-col>
+				<div>
+					<ons-button ng-click="maintenance.submit()" ng-disabled="maintenance.submitting">{{'Send and Continue' | translate}}</ons-button> 
+				</div>
+            </ons-col>
+        </ons-row>
+				
+</form>
+</ons-page>

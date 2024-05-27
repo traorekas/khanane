@@ -1,0 +1,77 @@
+ <!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <title>Chronos</title>  
+    <link rel="shortcut icon" type="image/ico" href="../shared/img/favicon.ico" />
+    
+    <!-- Onsen UI -->
+    <link rel="stylesheet" href="../libs/onsen/css/onsenui.css"/>  
+    <link rel="stylesheet" href="../libs/onsen/css/onsen-css-components-blue-basic-theme.css"/>  
+    <script type="text/javascript" src="../libs/onsen/js/angular/angular.min.js"></script>    
+    <script type="text/javascript" src="../libs/onsen/js/onsenui.min.js"></script>    
+
+    <!-- Angular plugins -->
+    <script type="text/javascript" src="../libs/angular/angular-translate.min.js"></script>    
+    <script type="text/javascript" src="../libs/angular/toastr/angular-toastr.min.js"></script>    
+    <link rel="stylesheet" href="../libs/angular/toastr/angular-toastr.min.css"/>  
+    
+    <!-- Miscellaneous -->
+    <link rel="stylesheet" href="../libs/bootstrap-grid12.css"/>  
+    <script type="text/javascript" src="../libs/moment.min.js"></script>    
+    <script type="text/javascript" src="../libs/amplify.store.min.js"></script>    
+    <script type="text/javascript" src="../libs/underscore.min.js"></script>    
+    
+    <!-- Application -->
+    <link rel="stylesheet" href="css/main.css"/>
+    <script type="text/javascript" src="js/main.js"></script>    
+    <script type="text/javascript" src="js/translate.js"></script>    
+    <script type="text/javascript" src="js/misc.js"></script>   
+
+	<!-- ktraore() -->
+	  <link rel="stylesheet" href="css/ngPopup.css">
+	  <script type="text/javascript" src="js/ngPopup.js"></script>
+	  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+	<!-- ktraore() -->
+	
+</head>
+
+<body ng-controller="servicingCtrl">    
+	
+ <ons-page>
+    <ons-toolbar>
+        <div class="center">Securiport</div>
+    </ons-toolbar>
+ <form name="enrForm" novalidate>
+        <ons-row class="chrono display">
+            <ons-col>
+                <span>{{chrono.secondsCountedToString()}}</span>
+                <div class="error" ng-show="chrono.secondsCounted <= 0 && enrollment.invalid">
+                    <span>{{'errorTimeCantBeZero' | translate}}</span>
+                </div>
+
+            </ons-col>
+        </ons-row>
+        <ons-row class="chrono buttons">
+            <ons-col>
+                <ons-button modifier="outline" ng-click="chrono.play()">
+                    <ons-icon icon="ion-play"></ons-icon>
+                </ons-button>
+            </ons-col>
+            <ons-col>
+                <ons-button modifier="outline" ng-click="chrono.pause()">
+                    <ons-icon icon="ion-pause"></ons-icon>
+                </ons-button>
+            </ons-col>
+            <ons-col>
+                <ons-button modifier="outline" ng-click="chrono.SendValues()">
+                    <ons-icon icon="ion-stop"></ons-icon>
+                </ons-button>
+            </ons-col>
+        </ons-row>
+ </form>
+ </ons-page>
+ </body>
+</html>
